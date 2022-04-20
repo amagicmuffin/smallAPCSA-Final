@@ -142,7 +142,8 @@ public class Environment {
         killcheck();
 
         for(Fireball fireball : fireballList) fireball.tick();  // TODO THIS CRASHES
-        // TODO you cant kill fireball while its ticking. instead, send entities to kill bucket at map[10][0] and have killcheck kill those
+        // TODO you cant kill fireball while its ticking. instead, implement instance var shouldKill with getter method.
+        // in tick(), update shouldKill as needed. killcheck will pick up needed kills.
         killcheck();
 
         // redraws map by clearing it and then putting all entities on
@@ -161,15 +162,22 @@ public class Environment {
 
     /**
      * If any Fireball overlaps any Enemy, despawn both
+     * TODO UPDATE WITH THIS INSTEAD:
+     * If any Fireball overlaps any Enemy, queue them for death then kill them
      */
     private static void killcheck() {
         for (Fireball f : fireballList) {
             for (Enemy e : enemyList) {
                 if (f.iPos == e.iPos && f.jPos == e.jPos) {
-                    Environment.despawnFireball(e.iPos, e.jPos);
-                    Environment.despawnEnemy(e.iPos, e.jPos);
+                    e.qDeath();
+                    f.qDeath();
                 }
             }
         }
+        
+        enemyList.removeIf(e -> e.shouldDie());
+        fireballList.removeIf(f -> f.shouldDie());
     }
 }
+
+
