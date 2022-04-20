@@ -30,12 +30,25 @@ public class Main {
         Environment.setTile(10, Player.jPos, Player.tile);
     }
 
+    public static int kI = 0;
+    public static char[] kCode = {'w', 'w', 's', 's', 'a', 'd', 'a', 'd', 'b', 'a'};
+    
     private static boolean konami(String input) {
-        //TODO
+        if(input.length() == 1) {
+            if(kCode[kI] == input.charAt(0)) {
+                System.out.println("yes");
+                kI++;
+                if(kI == kCode.length) 
+                    return true;
+            } else {
+                kI = 0;
+            }
+        }
         return false;
     }
-
+    
     private static void youWon() {
         // TODO
+        System.out.println("won");
     }
 }
