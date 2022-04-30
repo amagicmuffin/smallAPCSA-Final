@@ -13,7 +13,7 @@ public class Tomato extends Enemy {
             jPos = -1; // send to kill gutter
             // TODO del 1 hp?
         } else {
-            iPos--;
+            iPos++;
         }
     }
 }
