@@ -12,9 +12,8 @@ public class Fireball extends Entity {
     @Override
     public void tick() {
         if (iPos == 0) { // if about to smash into V
-            System.out.println("yeah");
-            Environment.despawnFireball(iPos,jPos);
-        } else {
+            jPos = -1; // send to kill gutter
+        } else { // if not about to, move fireball up.
             iPos--;
         }
     }

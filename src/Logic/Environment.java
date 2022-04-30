@@ -2,7 +2,6 @@ package Logic;
 
 import Entities.*;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 /**
  * This class stores all the data and methods to simulate an environment.
@@ -11,31 +10,31 @@ import java.util.Iterator;
  */
 public class Environment {
     public static final char FLOOR_TILE = ' ';
-    private static char[][] map = new char[][]{
-            {' ',' ',' ',' '},
-            {' ',' ',' ',' '},
-            {' ',' ',' ',' '},
-            {' ',' ',' ',' '},
-            {' ',' ',' ',' '},
-            {' ',' ',' ',' '},
-            {' ',' ',' ',' '},
-            {' ',' ',' ',' '},
-            {' ',' ',' ',' '},
-            {' ',' ',' ',' '},
-            {'#','#','#','#'},
+    private static char[][] map = new char[][]{  // rightmost thing is kill gutter
+            {' ',' ',' ',' ',' '},
+            {' ',' ',' ',' ',' '},
+            {' ',' ',' ',' ',' '},
+            {' ',' ',' ',' ',' '},
+            {' ',' ',' ',' ',' '},
+            {' ',' ',' ',' ',' '},
+            {' ',' ',' ',' ',' '},
+            {' ',' ',' ',' ',' '},
+            {' ',' ',' ',' ',' '},
+            {' ',' ',' ',' ',' '},
+            {'#','#','#','#',' '},
     };
     private static char[][] blankMap = new char[][]{
-            {' ',' ',' ',' '},
-            {' ',' ',' ',' '},
-            {' ',' ',' ',' '},
-            {' ',' ',' ',' '},
-            {' ',' ',' ',' '},
-            {' ',' ',' ',' '},
-            {' ',' ',' ',' '},
-            {' ',' ',' ',' '},
-            {' ',' ',' ',' '},
-            {' ',' ',' ',' '},
-            {'#','#','#','#'},
+            {' ',' ',' ',' ',' '},
+            {' ',' ',' ',' ',' '},
+            {' ',' ',' ',' ',' '},
+            {' ',' ',' ',' ',' '},
+            {' ',' ',' ',' ',' '},
+            {' ',' ',' ',' ',' '},
+            {' ',' ',' ',' ',' '},
+            {' ',' ',' ',' ',' '},
+            {' ',' ',' ',' ',' '},
+            {' ',' ',' ',' ',' '},
+            {'#','#','#','#',' '},
     };
     private static ArrayList<Enemy> enemyList = new ArrayList<>();
     private static ArrayList<Fireball> fireballList = new ArrayList<>();
@@ -44,7 +43,7 @@ public class Environment {
     public static void printMap() {
         String output = "";
 
-        output += "V V V V";
+        output += "V V V V\n";
 
         for(char[] row : map) {
             for(char tile : row) {
@@ -80,48 +79,6 @@ public class Environment {
     }
 
     /**
-     * Removes the enemy at coords
-     */
-    public static void despawnEnemy(int i, int j) {
-//        enemyList.removeIf(e -> e.iPos == i && e.jPos == j);
-
-        for (int k = 0; k < enemyList.size(); k++) {
-            if (enemyList.get(k).iPos == i && enemyList.get(k).jPos == j) {
-                enemyList.remove(k);
-                break;
-            }
-        }
-    }
-
-
-
-    /**
-     * Removes the fireball at coords
-     */
-    public static void despawnFireball(int i, int j) {
-//        fireballList.removeIf(f -> f.iPos == i && f.jPos == j);
-
-//        long cringe way
-//        Iterator<Fireball> itr = fireballList.iterator();
-//        while (itr.hasNext()) {
-//            Fireball f = itr.next();
-//            if (f.iPos == i && f.jPos == j) {
-//                itr.remove();
-//            }
-//        }
-
-        // TODO this will crash later, use the first commented out block
-        for (int k = 0; k < fireballList.size(); k++) {
-            if (fireballList.get(k).iPos == i && fireballList.get(k).jPos == j) {
-                fireballList.remove(k);
-                break;
-            }
-        }
-
-
-    }
-
-    /**
      * Adds a fireball to fireballList and puts it on the map.
      */
     public static void spawnFireball(Fireball fireball) {
@@ -141,8 +98,7 @@ public class Environment {
         for(Enemy enemy : enemyList) enemy.tick();
         killcheck();
 
-        for(Fireball fireball : fireballList) fireball.tick();  // TODO THIS CRASHES
-        // TODO you cant kill fireball while its ticking. instead, send entities to kill bucket at map[10][0] and have killcheck kill those
+        for(Fireball fireball : fireballList) fireball.tick();
         killcheck();
 
         // redraws map by clearing it and then putting all entities on
@@ -156,20 +112,24 @@ public class Environment {
         map[10][Player.jPos] = Player.tile;
 
         // environmental things below
-
+        int enemyjPos = (int) (Math.random() * 5); // 0 to 4
+        //spawnEnemy(new Tomato(enemyjPos)); // TODO causes crashes
     }
 
     /**
-     * If any Fireball overlaps any Enemy, despawn both
+     * If any Fireball overlaps any Enemy, send both to kill gutter. also kill all in kill gutter.
      */
     private static void killcheck() {
         for (Fireball f : fireballList) {
             for (Enemy e : enemyList) {
                 if (f.iPos == e.iPos && f.jPos == e.jPos) {
-                    Environment.despawnFireball(e.iPos, e.jPos);
-                    Environment.despawnEnemy(e.iPos, e.jPos);
+                    e.jPos = -1;
+                    f.jPos = -1;
                 }
             }
         }
+
+        fireballList.removeIf(f -> f.jPos == -1);
+        enemyList.removeIf(e -> e.jPos == -1);
     }
 }
