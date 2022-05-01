@@ -105,7 +105,13 @@ public class Environment {
         for(Enemy enemy : enemyList) enemy.tick();
         killcheck();
 
+<<<<<<< HEAD
         for(Fireball fireball : fireballList) fireball.tick();
+=======
+        for(Fireball fireball : fireballList) fireball.tick();  // TODO THIS CRASHES
+        // TODO you cant kill fireball while its ticking. instead, implement instance var shouldKill with getter method.
+        // in tick(), update shouldKill as needed. killcheck will pick up needed kills.
+>>>>>>> 17acc52f48f2db3acc62fcf7497c3627aa455ea3
         killcheck();
 
         // redraws map by clearing it and then putting all entities on
@@ -124,12 +130,19 @@ public class Environment {
     }
 
     /**
+<<<<<<< HEAD
      * If any Fireball overlaps any Enemy, send both to kill gutter. also kill all in kill gutter.
+=======
+     * If any Fireball overlaps any Enemy, despawn both
+     * TODO UPDATE WITH THIS INSTEAD:
+     * If any Fireball overlaps any Enemy, queue them for death then kill them
+>>>>>>> 17acc52f48f2db3acc62fcf7497c3627aa455ea3
      */
     private static void killcheck() {
         for (Fireball f : fireballList) {
             for (Enemy e : enemyList) {
                 if (f.iPos == e.iPos && f.jPos == e.jPos) {
+<<<<<<< HEAD
                     e.jPos = -1;
                     f.jPos = -1;
                 }
@@ -145,5 +158,17 @@ public class Environment {
      */
     private static int randjPos() {
         return (int) (Math.random() * 4);
+=======
+                    e.qDeath();
+                    f.qDeath();
+                }
+            }
+        }
+        
+        enemyList.removeIf(e -> e.shouldDie());
+        fireballList.removeIf(f -> f.shouldDie());
+>>>>>>> 17acc52f48f2db3acc62fcf7497c3627aa455ea3
     }
 }
+
+
