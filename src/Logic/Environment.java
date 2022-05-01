@@ -11,37 +11,41 @@ import java.util.ArrayList;
 public class Environment {
     public static final char FLOOR_TILE = ' ';
     private static char[][] map = new char[][]{  // rightmost thing is kill gutter
-            {' ',' ',' ',' ',' '},
-            {' ',' ',' ',' ',' '},
-            {' ',' ',' ',' ',' '},
-            {' ',' ',' ',' ',' '},
-            {' ',' ',' ',' ',' '},
-            {' ',' ',' ',' ',' '},
-            {' ',' ',' ',' ',' '},
-            {' ',' ',' ',' ',' '},
-            {' ',' ',' ',' ',' '},
-            {' ',' ',' ',' ',' '},
-            {'#','#','#','#',' '},
+            {' ',' ',' ',' '},
+            {' ',' ',' ',' '},
+            {' ',' ',' ',' '},
+            {' ',' ',' ',' '},
+            {' ',' ',' ',' '},
+            {' ',' ',' ',' '},
+            {' ',' ',' ',' '},
+            {' ',' ',' ',' '},
+            {' ',' ',' ',' '},
+            {' ',' ',' ',' '},
+            {'#','#','#','#'},
     };
     private static char[][] blankMap = new char[][]{
-            {' ',' ',' ',' ',' '},
-            {' ',' ',' ',' ',' '},
-            {' ',' ',' ',' ',' '},
-            {' ',' ',' ',' ',' '},
-            {' ',' ',' ',' ',' '},
-            {' ',' ',' ',' ',' '},
-            {' ',' ',' ',' ',' '},
-            {' ',' ',' ',' ',' '},
-            {' ',' ',' ',' ',' '},
-            {' ',' ',' ',' ',' '},
-            {'#','#','#','#',' '},
+            {' ',' ',' ',' '},
+            {' ',' ',' ',' '},
+            {' ',' ',' ',' '},
+            {' ',' ',' ',' '},
+            {' ',' ',' ',' '},
+            {' ',' ',' ',' '},
+            {' ',' ',' ',' '},
+            {' ',' ',' ',' '},
+            {' ',' ',' ',' '},
+            {' ',' ',' ',' '},
+            {'#','#','#','#'},
     };
     private static ArrayList<Enemy> enemyList = new ArrayList<>();
     private static ArrayList<Fireball> fireballList = new ArrayList<>();
     private static int currentGameTick = 0;
+    public static int enemyBaseHP = 15;
 
     public static void printMap() {
         String output = "";
+
+        output += "Home Base HP: " + Player.homeBaseHP + "\n";
+        output += "Enemy Base HP: " + Environment.enemyBaseHP + "\n";
 
         output += "V V V V\n";
 
@@ -107,17 +111,13 @@ public class Environment {
                 map[i][j] = blankMap[i][j];
             }
         }
-        for(Enemy enemy : enemyList) {
-            // System.out.printf("DEBUG en i,j: %d, %d\n", enemy.iPos, enemy.jPos); // TODO collapse to oneline when done
-            map[enemy.iPos][enemy.jPos] = enemy.tile;
-        }
+        for(Enemy enemy : enemyList) map[enemy.iPos][enemy.jPos] = enemy.tile;
         for(Fireball fireball : fireballList) map[fireball.iPos][fireball.jPos] = fireball.tile;
         map[10][Player.jPos] = Player.tile;
 
         // environmental things below
-        int enemyjPos = (int) (Math.random() * 4); // 0 to 3
-        System.out.println("DEBUG randj: " + enemyjPos);
-        spawnEnemy(new Tomato(enemyjPos)); // TODO causes crashes
+        if((currentGameTick + 2) % 4 == 0) spawnEnemy(new Tomato(randjPos()));
+        if(currentGameTick % 4 == 0) spawnEnemy(new Bouncer(randjPos()));
     }
 
     /**
@@ -135,5 +135,12 @@ public class Environment {
 
         fireballList.removeIf(f -> f.jPos == -1);
         enemyList.removeIf(e -> e.jPos == -1);
+    }
+
+    /**
+     * returns a random possible jPos. currently, 0 to 3 inclusive
+     */
+    private static int randjPos() {
+        return (int) (Math.random() * 4);
     }
 }

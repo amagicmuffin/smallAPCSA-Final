@@ -7,6 +7,7 @@ public class Player {
     public static char facing = 'd';
     public static String lastAction = "tryMove";
     public static final char tile = '@';
+    public static int homeBaseHP = 1;
 
     // Possible user actions
     public static void moveLeft() {

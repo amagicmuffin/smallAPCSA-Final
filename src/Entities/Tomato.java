@@ -1,5 +1,7 @@
 package Entities;
 
+import Logic.Player;
+
 public class Tomato extends Enemy {
     public Tomato(int j) {
         super(j);
@@ -11,7 +13,7 @@ public class Tomato extends Enemy {
 
         if (iPos == 9) { // if about to smash into base
             jPos = -1; // send to kill gutter
-            // TODO del 1 hp?
+            Player.homeBaseHP--;
         } else {
             iPos++;
         }

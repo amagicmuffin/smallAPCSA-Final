@@ -13,6 +13,7 @@ public class Fireball extends Entity {
     public void tick() {
         if (iPos == 0) { // if about to smash into V
             jPos = -1; // send to kill gutter
+            Environment.enemyBaseHP--;
         } else { // if not about to, move fireball up.
             iPos--;
         }
