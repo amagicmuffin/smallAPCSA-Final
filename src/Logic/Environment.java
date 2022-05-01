@@ -36,9 +36,12 @@ public class Environment {
             {' ',' ',' ',' '},
             {'#','#','#','#'},
     };
+
     private static ArrayList<Enemy> enemyList = new ArrayList<>();
     private static ArrayList<Fireball> fireballList = new ArrayList<>();
+
     private static int currentGameTick = 0;
+
     public static int enemyBaseHP = 15;
 
     public static void printMap() {

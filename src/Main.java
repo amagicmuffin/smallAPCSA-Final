@@ -44,7 +44,7 @@ public class Main {
 
         if(kCode[konamiI] == input.charAt(0)) {
             konamiI++;
-            if(konamiI == kCode.length) return true;
+            return konamiI == kCode.length;
         }
         return false;
     }
