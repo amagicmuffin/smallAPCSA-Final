@@ -40,9 +40,11 @@ public class Environment {
     private static ArrayList<Enemy> enemyList = new ArrayList<>();
     private static ArrayList<Fireball> fireballList = new ArrayList<>();
 
-    private static int currentGameTick = 0;
+    public static int currentGameTick = 0;
 
     public static int enemyBaseHP = 15;
+
+    public static boolean freeze = false;
 
     public static void printMap() {
         String output = "";
@@ -119,8 +121,11 @@ public class Environment {
         map[10][Player.jPos] = Player.tile;
 
         // environmental things below
-        if((currentGameTick + 2) % 4 == 0) spawnEnemy(new Tomato(randjPos()));
-        if(currentGameTick % 4 == 0) spawnEnemy(new Bouncer(randjPos()));
+        if(!freeze) {
+            if ((currentGameTick + 2) % 5 == 0) spawnEnemy(new Tomato(randjPos()));
+            if (currentGameTick % 5 == 0) spawnEnemy(new Bouncer(randjPos()));
+            if ((currentGameTick + 3) % 5 == 0) spawnEnemy(new Shifter(randjPos()));
+        }
     }
 
     /**

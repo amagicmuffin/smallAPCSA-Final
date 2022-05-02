@@ -18,6 +18,7 @@ public class Main {
             else if (userInput.equals("a")) Player.moveLeft();
             else if (userInput.equals("d")) Player.moveRight();
             else if (userInput.equals(" ")) Player.fireball();
+            else if (userInput.equals("freeze")) Environment.freeze = !Environment.freeze; // cheat code
             else Player.last();
 
             Environment.update();

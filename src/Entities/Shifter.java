@@ -1,5 +1,6 @@
 package Entities;
 
+import Logic.Environment;
 import Logic.Player;
 
 public class Shifter extends Enemy {
@@ -15,7 +16,8 @@ public class Shifter extends Enemy {
             jPos = -1; // send to kill gutter
             Player.homeBaseHP--;
         } else {
-            if(Environment.gameTick % 3 == 0) jPos--;
+            iPos++;
+            if(Environment.currentGameTick % 3 == 0) jPos--;
             // if going left moves shifter off screen, move back on
             if(jPos == -1) {
                 jPos = 3;
