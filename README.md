@@ -9,7 +9,7 @@ Method 1:
 - https://replit.com/@amagicmuffin/smallAPCSA-Final
 
 Method 2: 
-- you need to be able to compile java code with ```javac``` for this method to work
+- you need to be able to compile java code with ```javac``` for this method to work. You may need to download the java jdk 8 for this. You may need to add javac to your PATH for this.
 - grab whatever release you want from the right sidebar
 - [cd](https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/cd) into ```out\production\APCSA Final Simple``` 
   - your console should look something like this: ```C:\Users\amuffin\Desktop\code\java\APCSA Final Simple\out\production\APCSA Final Simple>```
