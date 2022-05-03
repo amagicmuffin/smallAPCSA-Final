@@ -5,7 +5,7 @@ APCSA final project: an ascii game that uses inheritance.
 
 ## Installation
 Method 1:
-- WARNING: you can only play one version with this method. If you want to play an older or new version, you have to use a different installation method.
+- WARNING: you can only play one version with this method. If you want to play an older or newer version, you have to use a different installation method.
 - https://replit.com/@amagicmuffin/smallAPCSA-Final
 
 Method 2: 
