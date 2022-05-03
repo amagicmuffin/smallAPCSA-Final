@@ -44,7 +44,7 @@ public class Environment {
 
     public static int enemyBaseHP = 15;
 
-    public static boolean freeze = false;
+    public static boolean frozen = false;
 
     public static void printMap() {
         String output = "";
@@ -121,7 +121,7 @@ public class Environment {
         map[10][Player.jPos] = Player.tile;
 
         // environmental things below
-        if(!freeze) {
+        if(!frozen) {
             if ((currentGameTick + 2) % 5 == 0) spawnEnemy(new Tomato(randjPos()));
             if (currentGameTick % 5 == 0) spawnEnemy(new Bouncer(randjPos()));
             if ((currentGameTick + 3) % 5 == 0) spawnEnemy(new Shifter(randjPos()));

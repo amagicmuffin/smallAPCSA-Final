@@ -10,6 +10,11 @@ public class Player {
     public static int homeBaseHP = 1;
 
     // Possible user actions
+
+    /**
+     * Moves player to the left and updates facing and lastAction.
+     * If at left side, go to right.
+     */
     public static void moveLeft() {
         lastAction = "tryMove";
         facing = 'a';
@@ -17,6 +22,10 @@ public class Player {
         if(jPos == -1) jPos = 3;
     }
 
+    /**
+     * Moves player to the right and updates facing and lastAction.
+     * If at right side, go to left.
+     */
     public static void moveRight() {
         lastAction = "tryMove";
         facing = 'd';
@@ -24,6 +33,9 @@ public class Player {
         if(jPos == 4) jPos = 0;
     }
 
+    /**
+     * Spawns a fireball at Player's current jPos.
+     */
     public static void fireball() {
         lastAction = "fireball";
         Environment.spawnFireball(new Fireball(jPos));
@@ -31,7 +43,7 @@ public class Player {
 
     /**
      * does last action based on lastAction.
-     * Does nothing if cannot find "tryMove", "fireball"
+     * Does nothing if cannot find "tryMove" or "fireball"
      */
     public static void last() {
         if(lastAction.equals("tryMove")) {
