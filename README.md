@@ -1,9 +1,11 @@
 # What is this?
-APCSA final project: an ascii game that uses inheritance.
+APCSA final project: an ascii game that uses inheritance. 
 
 # How do I play?
 
 ## Installation
+I made this on a Windows computer. If you don't have a Windows computer, some things might work differently.
+
 Method 1 (The Easy One):
 - WARNING: you can only play one version with this method. If you want to play an older or newer version, you have to use a different installation method.
 - https://replit.com/@amagicmuffin/smallAPCSA-Final
