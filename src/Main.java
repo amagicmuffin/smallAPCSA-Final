@@ -9,10 +9,11 @@ public class Main {
 
     public static void main(String[] args) {
         setup();
-        Environment.printMap();
+        
         boolean gaming = true;
         while (gaming) {
             String userInput = scan.nextLine();
+            ClearScreen.clear();
             if(konami(userInput)) break;
             else if (userInput.equals("a")) Player.moveLeft();
             else if (userInput.equals("d")) Player.moveRight();
@@ -36,6 +37,8 @@ public class Main {
 
     private static void setup() {
         Environment.setTile(10, Player.jPos, Player.tile);
+        ClearScreen.clear();
+        Environment.printMap();
     }
 
     // konamiI and kCode
