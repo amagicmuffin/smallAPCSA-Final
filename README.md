@@ -4,7 +4,9 @@ APCSA final project: an ascii game that uses inheritance.
 # How do I play?
 
 ## Installation
-I made this on a Windows computer. If you don't have a Windows computer, some things might work differently.
+I made this on a Windows computer. If you don't have a Windows computer, some things might work differently. 
+This game is smooth because of ANSI escape codes which don't exist on windows for some reason.
+Use git bash.
 
 Method 1 (The Easy One):
 - WARNING: you can only play one version with this method. If you want to play an older or newer version, you have to use a different installation method.
