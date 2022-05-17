@@ -13,7 +13,12 @@ public class Main {
         boolean gaming = true;
         while (gaming) {
             String userInput = scan.nextLine();
-            ClearScreen.clear();
+
+            // clear screen
+            System.out.print("\033[H\033[2J");
+            System.out.flush();
+
+            // process input
             if(konami(userInput)) break;
             else if (userInput.equals("a")) Player.moveLeft();
             else if (userInput.equals("d")) Player.moveRight();
@@ -21,6 +26,7 @@ public class Main {
             else if (userInput.equals("freeze")) Environment.frozen = !Environment.frozen; // cheat code
             else Player.last();
 
+            // do things
             Environment.update();
             if (Environment.enemyBaseHP == 0) break;
             if (Player.homeBaseHP == 0) break;
@@ -37,7 +43,11 @@ public class Main {
 
     private static void setup() {
         Environment.setTile(10, Player.jPos, Player.tile);
-        ClearScreen.clear();
+
+        // clear screen
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
+
         Environment.printMap();
     }
 
