@@ -9,8 +9,7 @@ import java.util.ArrayList;
  * All things that have to do with what a user can see are in UI.java.
  */
 public class Environment {
-    public static final char FLOOR_TILE = ' ';
-    private static char[][] map = new char[][]{  // rightmost thing is kill gutter
+    private static char[][] map = new char[][]{
             {' ',' ',' ',' '},
             {' ',' ',' ',' '},
             {' ',' ',' ',' '},
@@ -44,7 +43,7 @@ public class Environment {
 
     public static int enemyBaseHP = 15;
 
-    public static boolean frozen = false;
+    public static boolean frozen = false;  // if true, no enemies will be spawned
 
     public static void printMap() {
         String output = "";
@@ -66,18 +65,10 @@ public class Environment {
     }
 
     /**
-     * sets main map (not backup map)
+     * Changes a tile on the main map (not backup map)
      */
     public static void setTile(int i, int j, char c) {
         map[i][j] = c;
-    }
-
-    /**
-     * Returns true if the tile at i,j is empty.
-     * This is used to check if an entity can move to it.
-     */
-    public static boolean emptyTileAt(int i, int j) {
-        return map[i][j] == FLOOR_TILE;
     }
 
     /**
@@ -94,7 +85,6 @@ public class Environment {
         fireballList.add(fireball);
     }
 
-    // MISC METHODS ////////////////////
     /**
      * Updates all non-player Entities by one game tick.
      * Updates all Enemies first, then all Fireballs. This is because of how game logic works.
@@ -103,24 +93,23 @@ public class Environment {
     public static void update() {
         currentGameTick++;
 
-        // ticks all entities
+        // ticks all enemies, then checks if anyone needs to be killed
         for(Enemy enemy : enemyList) enemy.tick();
         killcheck();
 
+        // ticks all fireballs, then checks if anyone needs to be killed
         for(Fireball fireball : fireballList) fireball.tick();
         killcheck();
 
-        // redraws map by clearing it and then putting all entities on
-        for(int i = 0; i < map.length; i++) { // TODO possible error point
-            for(int j = 0; j < map[0].length; j++) {
-                map[i][j] = blankMap[i][j];
-            }
+        // redraws map by copying blankMap onto the visible map and then putting all entities on
+        for(int i = 0; i < map.length; i++) {
+            System.arraycopy(blankMap[i], 0, map[i], 0, map[0].length);
         }
         for(Enemy enemy : enemyList) map[enemy.iPos][enemy.jPos] = enemy.tile;
         for(Fireball fireball : fireballList) map[fireball.iPos][fireball.jPos] = fireball.tile;
         map[10][Player.jPos] = Player.tile;
 
-        // environmental things below
+        // if spawning isn't frozen, spawn enemies as needed
         if(!frozen) {
             if ((currentGameTick + 2) % 5 == 0) spawnEnemy(new Tomato(randjPos()));
             if (currentGameTick % 5 == 0) spawnEnemy(new Bouncer(randjPos()));
@@ -146,7 +135,7 @@ public class Environment {
     }
 
     /**
-     * returns a random possible jPos. currently, 0 to 3 inclusive
+     * Returns a random possible jPos. Currently, 0 to 3 inclusive
      */
     private static int randjPos() {
         return (int) (Math.random() * 4);

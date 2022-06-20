@@ -4,8 +4,6 @@ import java.util.Scanner;
 
 public class Main {
     public static Scanner scan = new Scanner(System.in);
-    public static int konamiI = 0;
-    public static final char[] kCode = {'w', 'w', 's', 's', 'a', 'd', 'a', 'd', 'b', 'a'};
 
     public static void main(String[] args) {
         setup();
@@ -19,7 +17,7 @@ public class Main {
             System.out.flush();
 
             // process input
-            if(konami(userInput)) break;
+            if(Konami.check(userInput)) break;
             else if (userInput.equals("a")) Player.moveLeft();
             else if (userInput.equals("d")) Player.moveRight();
             else if (userInput.equals(" ")) Player.fireball();
@@ -42,24 +40,15 @@ public class Main {
     }
 
     private static void setup() {
+        // place player on the screen
         Environment.setTile(10, Player.jPos, Player.tile);
 
         // clear screen
         System.out.print("\033[H\033[2J");
         System.out.flush();
 
+        // print the map
         Environment.printMap();
-    }
-
-    // konamiI and kCode
-    private static boolean konami(String input) {
-        if (input.length() == 0) return false;
-
-        if(kCode[konamiI] == input.charAt(0)) {
-            konamiI++;
-            return konamiI == kCode.length;
-        }
-        return false;
     }
 
     private static void youWon() {
