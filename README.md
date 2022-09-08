@@ -8,11 +8,9 @@ I made this on a Windows computer. If you don't have a Windows computer, some th
 This game is smooth because of ANSI escape codes which don't exist on windows for some reason.
 Use git bash.
 
-Method 1 (The Easy One):
+Method 1 (The Simple One):
 - WARNING: you can only play one version with this method. If you want to play an older or newer version, you have to use a different installation method.
 - https://replit.com/@amagicmuffin/smallAPCSA-Final
-
-If you want to use one of these other methods or an unlisted one (cough bluej), figuring out how to is yro'ue problem. Don't ask me.
 
 Method 2: 
 - you need to be able to compile java code with ```javac``` for this method to work. You may need to download the java jdk 8 for this. You may need to add javac to your PATH for this.
